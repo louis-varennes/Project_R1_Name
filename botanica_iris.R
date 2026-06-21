@@ -279,3 +279,108 @@ cat("
    - Le scatter plot Petal.Length vs Petal.Width montre 3 clusters distincts
    - Setosa est parfaitement séparée ; versicolor et virginica se chevauchent légèrement
 ")
+
+
+# =============================================================================
+# EXPORT DES GRAPHIQUES EN PNG
+# =============================================================================
+
+path <- "~/Desktop/Project_R1_Botanica/plots/"
+
+# Histogramme sépales
+ggplot(iris, aes(x = Sepal.Length, fill = Species)) +
+  geom_histogram(bins = 20, alpha = 0.7, position = "identity") +
+  scale_fill_manual(values = c("#3B82F6", "#10B981", "#F59E0B")) +
+  labs(title = "Répartition de la Longueur des Sépales par Espèce", x = "Longueur du Sépale (cm)", y = "Fréquence") +
+  theme_minimal()
+ggsave(paste0(path, "01_histogramme_sepales.png"), width = 8, height = 5)
+
+# Histogramme pétales
+ggplot(iris, aes(x = Petal.Length, fill = Species)) +
+  geom_histogram(bins = 20, alpha = 0.7, position = "identity") +
+  scale_fill_manual(values = c("#3B82F6", "#10B981", "#F59E0B")) +
+  labs(title = "Répartition de la Longueur des Pétales par Espèce", x = "Longueur du Pétale (cm)", y = "Fréquence") +
+  theme_minimal()
+ggsave(paste0(path, "02_histogramme_petales.png"), width = 8, height = 5)
+
+# Boxplot sépales
+ggplot(iris, aes(x = Species, y = Sepal.Length, fill = Species)) +
+  geom_boxplot(alpha = 0.8, outlier.color = "red", outlier.size = 2) +
+  scale_fill_manual(values = c("#3B82F6", "#10B981", "#F59E0B")) +
+  labs(title = "Boxplot - Longueur des Sépales par Espèce", x = "Espèce", y = "Longueur du Sépale (cm)") +
+  theme_minimal()
+ggsave(paste0(path, "03_boxplot_sepales.png"), width = 8, height = 5)
+
+# Boxplot pétales longueur
+ggplot(iris, aes(x = Species, y = Petal.Length, fill = Species)) +
+  geom_boxplot(alpha = 0.8, outlier.color = "red", outlier.size = 2) +
+  scale_fill_manual(values = c("#3B82F6", "#10B981", "#F59E0B")) +
+  labs(title = "Boxplot - Longueur des Pétales par Espèce", x = "Espèce", y = "Longueur du Pétale (cm)") +
+  theme_minimal()
+ggsave(paste0(path, "04_boxplot_petales_longueur.png"), width = 8, height = 5)
+
+# Boxplot pétales largeur
+ggplot(iris, aes(x = Species, y = Petal.Width, fill = Species)) +
+  geom_boxplot(alpha = 0.8, outlier.color = "red", outlier.size = 2) +
+  scale_fill_manual(values = c("#3B82F6", "#10B981", "#F59E0B")) +
+  labs(title = "Boxplot - Largeur des Pétales par Espèce", x = "Espèce", y = "Largeur du Pétale (cm)") +
+  theme_minimal()
+ggsave(paste0(path, "05_boxplot_petales_largeur.png"), width = 8, height = 5)
+
+# Violin plot longueur pétales
+ggplot(iris, aes(x = Species, y = Petal.Length, fill = Species)) +
+  geom_violin(alpha = 0.7) +
+  geom_boxplot(width = 0.1, alpha = 0.9, outlier.color = "red", outlier.size = 2) +
+  stat_summary(fun = mean, geom = "point", shape = 18, size = 3, color = "white") +
+  scale_fill_manual(values = c("#3B82F6", "#10B981", "#F59E0B")) +
+  labs(title = "Violin Plot - Longueur des Pétales par Espèce", x = "Espèce", y = "Longueur du Pétale (cm)") +
+  theme_minimal()
+ggsave(paste0(path, "06_violin_petales_longueur.png"), width = 8, height = 5)
+
+# Violin plot largeur pétales
+ggplot(iris, aes(x = Species, y = Petal.Width, fill = Species)) +
+  geom_violin(alpha = 0.7) +
+  geom_boxplot(width = 0.1, alpha = 0.9, outlier.color = "red", outlier.size = 2) +
+  stat_summary(fun = mean, geom = "point", shape = 18, size = 3, color = "white") +
+  scale_fill_manual(values = c("#3B82F6", "#10B981", "#F59E0B")) +
+  labs(title = "Violin Plot - Largeur des Pétales par Espèce", x = "Espèce", y = "Largeur du Pétale (cm)") +
+  theme_minimal()
+ggsave(paste0(path, "07_violin_petales_largeur.png"), width = 8, height = 5)
+
+# Scatter plot pétales
+ggplot(iris, aes(x = Petal.Length, y = Petal.Width, color = Species)) +
+  geom_point(size = 3, alpha = 0.8) +
+  scale_color_manual(values = c("#3B82F6", "#10B981", "#F59E0B")) +
+  labs(title = "Scatter Plot - Longueur vs Largeur des Pétales", x = "Longueur du Pétale (cm)", y = "Largeur du Pétale (cm)") +
+  theme_minimal()
+ggsave(paste0(path, "08_scatter_petales.png"), width = 8, height = 5)
+
+# Scatter plot sépales
+ggplot(iris, aes(x = Sepal.Length, y = Sepal.Width, color = Species)) +
+  geom_point(size = 3, alpha = 0.8) +
+  scale_color_manual(values = c("#3B82F6", "#10B981", "#F59E0B")) +
+  labs(title = "Scatter Plot - Longueur vs Largeur des Sépales", x = "Longueur du Sépale (cm)", y = "Largeur du Sépale (cm)") +
+  theme_minimal()
+ggsave(paste0(path, "09_scatter_sepales.png"), width = 8, height = 5)
+
+# Heatmap corrélation
+ggsave(paste0(path, "10_heatmap_correlation.png"),
+  plot = ggplot(corr_long, aes(x = Var1, y = Var2, fill = value)) +
+    geom_tile(color = "white") +
+    geom_text(aes(label = round(value, 2)), size = 4) +
+    scale_fill_gradient2(low = "#3B82F6", mid = "white", high = "#EF4444", midpoint = 0, limit = c(-1, 1), name = "Corrélation") +
+    labs(title = "Heatmap de Corrélation - Dataset IRIS", x = "", y = "") +
+    theme_minimal() +
+    theme(axis.text.x = element_text(angle = 45, hjust = 1)),
+  width = 8, height = 6)
+
+# Pair plot
+ggsave(paste0(path, "11_pair_plot.png"),
+  plot = ggpairs(iris, aes(color = Species, alpha = 0.7), columns = 1:4) +
+    scale_color_manual(values = c("#3B82F6", "#10B981", "#F59E0B")) +
+    scale_fill_manual(values = c("#3B82F6", "#10B981", "#F59E0B")) +
+    labs(title = "Pair Plot - Toutes les relations entre variables") +
+    theme_minimal(),
+  width = 10, height = 8)
+
+cat("Tous les graphiques ont été sauvegardés dans le dossier plots/\n")
